@@ -1,0 +1,322 @@
+#private
+'''
+class Secret:
+    def __heyhey(self):
+        print("I bet you cannot see me.")
+    def OK(self):
+        print("The secret is:")
+        self.__heyhey()
+s=Secret()
+s.__heyhey()#no value in _heyhey
+#The heyhey adding '__'cannot be visited.
+#How about use's.ok()'  
+'''
+#The name limit of class
+'''
+class MemberCounter:
+    members=0
+    def init(self):
+        MemberCounter.members +=1
+#input 'm1=MemberCounter()>>m1.init()>>m2=Member.counter()>>m2.init()'
+#use it to count the amount of class.
+'''
+
+'''
+class Filter:
+    def init(self):
+        self.blocked=[]
+    def filter(self,sequence):
+        return [x for x in sequence if x  not in self.blocked]
+class SPAMFilter(Filter):#以此写法说明SPAMFilter是Filter的一个子类
+    def init(self):#重写Filter超类的init方法，如果类为SPAMFilter的话上面那个方法不管用了
+        self.blocked=['SPAM']
+s=SPAMFilter()
+s.init()
+b=[]#set up a empty table
+while True:
+    a=input("Input a series of sequences, and enter'STOP'to end it.\n")
+    if a=='STOP':
+        break
+    b.append(a)
+    
+s.filter(b)#此时s也可以执行Filter中的代码块
+
+'''
+
+#filter function
+'''
+def is_odd(n):
+    return n % 2 == 1#这是返回一个布尔值
+if __name__ =='__main__':
+    L=[]
+    while True:
+        a=int(input('Input a integer and input \'0\' to end.\n'))
+        L.append(a)
+        if a ==0:
+            break
+    print(list(filter(is_odd, L)))
+'''    
+
+
+#列表生成式的练习
+'''
+L1 = ['Hello', 'World', 'my',23,'favorate',18, 'Apple', None]
+L2=[x for x in L1 if isinstance(x,str)==True]
+print(L2)
+'''
+#字典使用的复习
+'''
+d={'Adam':91,'Adair':84,'Candy':103}
+print (d['Adam'])
+#try to encode the 'Tony' in dto justify the exsitence.
+'''
+#generater生成器的介绍，其保存了算法没有保存数据
+#we know that列表生成式，将列表生成式改为'()'
+'''
+g = (x * x for x in range(10))
+
+#use nest(g) function to see the result!
+#The best method is to utilize the 'for' cycle.
+for n in g:
+    print(n)
+'''
+#generator与yeild的搭配使用
+'''
+def odd():
+    print('step 1')
+    yield 1
+    print('step 2')
+    yield(3)
+    print('step 3')
+    yield(5)
+gaga=odd()
+#不断的应用next(gaga)函数
+'''
+#在杨辉三角的应用
+#将杨辉三角的每一行看成一个list,写一个生成器（generator）,不断输出下一行list
+'''
+def triangel(n):
+    L=[1]
+    #定义一个list[1]
+    while True:
+        yield L#打印出该list，Be attention to the the differences between 'print' and 'yield' 
+        L=[L[x]+L[x+1] for x in range(len(L)-1)]#计算下一行中间的值（除去两边的1）
+        L.insert(0,1)#在开头插入1
+        L.append(1)#在结尾添加1
+        if len(L)>10:#仅输出10行
+            break
+#生成一个generator对象，然后通过for循环迭代输出每一行
+a=triangel(10)
+for i in a:
+    print(i)
+'''
+#高阶函数 sorted 高阶函数的定义是可以实现一个内部函数
+'''
+a=[1,-6,-5,-14,8]
+b=sorted(a, key=abs)#通过绝对值来比较大小
+print(b)
+c=['apple','dig','kamgaroo','object']
+d=sorted(c,key=str.lower,reverse=True)#忽略大小写，注意反向的表示方法
+print(d)
+'''
+#现在来试一下map这个高级函数的用法
+'''
+def F(n):
+    return (n*n-1)
+r1=list(map(F,[1,2,3,4,5,6]))
+print(r1)
+r2=list(map(str,[1,2,3,4,5,6]))
+print(r2)
+'''
+#reduce function
+'''
+from functools import reduce
+def fn(x, y):
+    return x * 10 + y
+r=reduce(fn, [1, 3, 5, 7, 9])
+print(r)
+'''
+#Show the common use of the'reduce'and 'map'
+'''
+from functools import reduce
+
+def str2int(s):
+    def fn(x, y):
+        return x * 10 + y
+    def char2num(s):
+        return {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}[s]
+    #The appilcation of dictionary
+    return reduce(fn, map(char2num, s))
+#try ton input str2int(['1','7','9'])
+'''
+#Afunction without define it:lambda
+'''
+a=list(map(lambda x: x*x+3,[1,2,3,4,5,6,7,8,9]))
+print(a)
+f=lambda x:x*x+3#You'll find that lambda also a name.
+print(f(5))
+'''
+#装饰器的使用，相当于内裤外的长裤，装饰器的作用是外加包装
+'''
+def log(func):
+    def wrapper(*args, **kw):
+        print('begin call %s():' % func.__name__)
+        func(*args, **kw)
+        print('end call %s():' % func.__name__)
+    return wrapper
+
+@log#  @log means using 'log(now)'.
+def now():
+    print('2017-4-25')#We can run the 'now()'to see the results.
+'''
+
+#The appilication of partical.
+'''
+import functools
+max2=functools.partial(max,10)
+a=max2(5,6,7)
+print(a)
+#这个函数固定原函数部分参数，使这个参数参入其中
+'''
+
+
+#The differences between '*arg' and '**kw'
+
+'''
+
+def singleStar(common, *rest):  
+    print("Common args: ", common)  
+    print("Rest args: ", rest)  
+      
+def doubleStar(common, **double):  
+    print("Common args: ", common)  
+    print("Double args: ", double)  
+      
+def singleAndDoubleStar(common, *single, **double):  
+    print("Common args: ", common)  
+    print("Single args: ", single)  
+    print("Double args: ", double)  
+  
+def defaultValueArgs(common, defaultStr = "default", defaultNum = 0):  
+    print("Common args", common)  
+    print("Default String", defaultStr)  
+    print("Default Number", defaultNum)
+#By inputing some number into it.
+
+'''
+#Try GUI and tkinter
+'''
+from tkinter import *
+import tkinter.messagebox as messagebox
+
+class Application(Frame):
+    def __init__(self, master=None):
+        Frame.__init__(self, master)
+        self.pack()
+        self.createWidgets()
+
+    def createWidgets(self):
+        self.nameInput = Entry(self)
+        self.nameInput.pack()
+        self.alertButton = Button(self, text='Hello', command=self.hello)
+        self.alertButton.pack()
+
+    def hello(self):
+        name = self.nameInput.get() or 'world'
+        messagebox.showinfo('Message', 'Hello, %s' % name)
+
+app = Application()
+# windows title
+app.master.title('Hello World')
+# message mainloop:
+app.mainloop()
+'''
+'''
+#The use of class
+
+class Student(object):
+
+    def __init__(self, name, score):#_init_方法
+        self.name = name
+        self.score = score
+
+    def print_score(self):
+        print('%s: %s' % (self.name, self.score))
+
+'''
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+'''
+class Student(object):
+
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+    def print_score(self):
+        print('%s: %s' % (self.name, self.score))
+
+    def get_grade(self):
+        if self.score >= 90:
+            return 'A'
+        elif self.score >= 60:
+            return 'B'
+        else:
+            return 'C'
+
+bart = Student('Bart Simpson', 59)
+lisa = Student('Lisa Simpson', 87)
+
+print('bart.name =', bart.name)
+print('bart.score =', bart.score)
+bart.print_score()
+
+print('grade of Bart:', bart.get_grade())
+print('grade of Lisa:', lisa.get_grade())
+#Appiliacation！！！
+'''
+#Utilize the __slot__method to limit the attribute.
+'''
+class student:
+    __slots__=('name','age')
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def __str__(self):#Make the name of class more viewable.
+        return 'student object(name,%s)' %self.name
+print(student('Adam',19))
+'''
+'''This is a iteration of class.
+class fib():
+    __slot__=('a','b')
+    def __init__(self):
+        self.a,self.b=0,1
+    def __iter__(self):
+        return self
+    def __next__(self):
+        self.a, self.b = self.b, self.a + self.b
+        if self.a>10000:#退出循环条件
+            raise StopIteration()
+        return self.a
+for n in fib():
+    print(n)
+'''
+#The iteration of class again！
+'''
+class power():
+    __slot__=('a')
+    def __init__(self,a):
+        self.a=a
+    def __iter__(self):
+        return self
+    def __next__(self):
+        self.a=self.a*self.a
+        if self.a>10000:
+            raise StopIteration()
+        return self.a
+    def __str__(self):
+        return 'The number is %d'%self.a
+for i in power(3):
+    print(i)
+print(power(3))# cannot use __str__ in iteration
+'''
